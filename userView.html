@@ -1,17 +1,16 @@
  <!DOCTYPE html>
-  <html>
-    <head>
-      <!--Import Google Icon Font-->
-      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <!--Import materialize.css-->
-      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+ <html>
+ <head>
+  <!--Import Google Icon Font-->
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
 
-      <!--Let browser know website is optimized for mobile-->
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
 
-    <body>
-      <!--Import jQuery before materialize.js-->
+<body ng-app="postApp" ng-controller="postController">
 
 
   <nav>
@@ -19,78 +18,78 @@
       <a href="#" class="brand-logo">Logo</a>
     </div>
   </nav>
-        
-   <div class="container">
-   </div>
 
-<div class="fixed-action-btn " style="bottom: 45px; right: 24px;">
+  <div class="container">
+  </div>
 
-  <a class="btn-floating btn-large waves-effect waves-light red modal-trigger" href="#modal1"><i class="material-icons">add</i></a>
-        </div>
+  <div class="fixed-action-btn " style="bottom: 45px; right: 24px;">
+
+    <a class="btn-floating btn-large waves-effect waves-light red modal-trigger" href="#modal1"><i class="material-icons">add</i></a>
+  </div>
 
 
-<!-- Modal Structure -->
+  <!-- Modal Structure -->
   <div id="modal1" class="modal modal-fixed-footer">
     <div class="modal-content">
-     
 
 
 
 
-    <!-- Account type select-->
 
-    <div class="input-field col s12">
-      <select id="account_select" onchange="selectHandler()">
-        <option value="" disabled selected>Choose your option</option>
-        <option value="1">Saving Account</option>
-        <option value="2">Term Account</option>
-        <option value="3">Current Account</option>
-      </select>
+      <!-- Account type select-->
 
-    </div>
+      <div class="input-field col s12">
+        <select id="account_select" onchange="selectHandler()">
+          <option value="" disabled selected>Choose your option</option>
+          <option value="1">Saving Account</option>
+          <option value="2">Term Account</option>
+          <option value="3">Current Account</option>
+        </select>
 
-    <div class="row" id="saving_form">
-      <form method="POST" action="/add/saving">
+      </div>
 
-        <!-- Taxe promotion -->
-        <div class="input-field col s12">
-          <select name="taxpromotionId">
-            <option value="" disabled selected>Choose your option</option>
-            <option value="2">0.01 (30 jours)</option>
-            <option value="3">0.01 (365 jours)</option>
+      <div class="row" id="saving_form">
+        <form name="saving_form" ng-submit="submitSavingForm()">
 
-          </select>
-          <label>Taxe Promotion </label>
-        </div>
+          <!-- Taxe promotion -->
+          <div class="input-field col s12">
+            <select name="taxpromotionId" ng-model="SavingAccount.taxpromotionId">
+              <option value="" disabled selected>Choose your option</option>
+              <option value="2">0.01 (30 jours)</option>
+              <option value="3">0.01 (365 jours)</option>
 
-        <!-- Bonus promotion -->
-        <div class="input-field col s12">
-          <select name="bonuspromotionId">
-            <option value="" disabled selected>Choose your option</option>
-            <option value="4">0.001 (365 jours)</option>
-            <option value="5">0.01 (365 jours)</option>
+            </select>
+            <label>Taxe Promotion </label>
+          </div>
 
-          </select>
-          <label>Bonus Promotion </label>
+          <!-- Bonus promotion -->
+          <div class="input-field col s12">
+            <select name="bonuspromotionId" ng-model="SavingAccount.bonuspromotionId">
+              <option value="" disabled selected>Choose your option</option>
+              <option value="4">0.001 (365 jours)</option>
+              <option value="5">0.01 (365 jours)</option>
 
-        </div>
+            </select>
+            <label>Bonus Promotion </label>
 
-        <!-- withdrawallimitpromotion promotion -->
-        <div class="input-field col s12">
-          <select name="bonuspromotionId">
-            <option value="" disabled selected>Choose your option</option>
-            <option value="1">300 (7 jours)</option>
+          </div>
 
-          </select>
-          <label>withdrawallimit Promotion </label>
-        </div>
+          <!-- withdrawallimitpromotion promotion -->
+          <div class="input-field col s12">
+            <select name="withdrawallimitpromotionId" ng-model="SavingAccount.withdrawallimitpromotionId">
+              <option value="" disabled selected>Choose your option</option>
+              <option value="1">300 (7 jours)</option>
 
-        <button name="action" class="waves-effect waves-light btn" type="submit">create<i class="material-icons right">send</i></button>
-      </form>
-    </div>
+            </select>
+            <label>withdrawallimit Promotion </label>
+          </div>
 
-    <div id="term_form">
-      <form method="POST" action="/add/term">
+          <button name="action" class="waves-effect waves-light btn" type="submit">create<i class="material-icons right">send</i></button>
+        </form>
+      </div>
+
+      <div id="term_form">
+       <form name="term_form" ng-submit="submitTermForm()">
 
         <!-- duration -->
         <div class="input-field col s6">
@@ -116,7 +115,7 @@
     </div>
 
     <div id="current_form">
-      <form method="POST" action="/add/current">
+      <form name="current_form" ng-submit="submitCurrentForm()">
         <!-- Taxe promotion -->
         <div class="input-field col s12">
           <select name="taxpromotionId">
@@ -138,87 +137,87 @@
 
 
 
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">OK</a>
-    </div>
   </div>
-          
-      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-      <script type="text/javascript" src="js/materialize.min.js"></script>
-      <script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script> 
+  <div class="modal-footer">
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">OK</a>
+  </div>
+</div>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/materialize.min.js"></script>
+<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script> 
 
 
-      <script>
+<script>
 
-  $(document).ready(function(){
+$(document).ready(function(){
     // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
     $('.modal-trigger').leanModal();
   });
-          
+
           // add saving account ANgular JS handler
           var postApp = angular.module('postApp', []);
     // Controller function and passing $http service and $scope var.
     postApp.controller('postController', function($scope, $http) {
       // create a blank object to handle form data.
-      $scope.user = {};
+      $scope.SavingAccount = {};
       // calling our submit function.
-    
-      $scope.submitForm = function() {
+
+      $scope.submitSavingForm = function() {
+        alert($scope.SavingAccount.bonuspromotionId);
         // Posting data to php file
         $http({
           method  : 'POST',
-          url     : 'http://localhost:8080/api/user/register',
-          data    : $scope.user, //forms user object
+          url     : 'http://localhost:8080/api/user/9/account/add/saving',
+          data    : $scope.SavingAccount, //forms user object
           headers : {'Content-Type': 'application/x-www-form-urlencoded'} ,
-           transformRequest: function(obj) {
-        var str = [];
-        for(var p in obj)
-        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-        return str.join("&");
-        },
+          transformRequest: function(obj) {
+            var str = [];
+            for(var p in obj)
+              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            return str.join("&");
+          },
         })
         .success(function(data) {
-            console.log(data);
-          });
+          console.log(data);
+        });
       };
     });
 
 
-
-
-      function Hello($scope, $http) {
-        $http.get('http://localhost:8080/api/user/9/account').
-          success(function(data) {
-            $scope.greeting = data;
-        });
-        }
-      </script>
-
-      <script type="text/javascript">
-  function selectHandler(){
-    var select = document.getElementById("account_select");
-    document.getElementById("saving_form").style.display="none";
-    document.getElementById("term_form").style.display="none";
-    document.getElementById("current_form").style.display="none";
-    switch (select.value){
-      case "1" :
-      document.getElementById("saving_form").style.display="inline";
-      break;
-      case "2":
-      document.getElementById("term_form").style.display="inline";
-      break;
-      case "3":
-      document.getElementById("current_form").style.display="inline";
-      break;
+    function Hello($scope, $http) {
+      $http.get('http://localhost:8080/api/user/9/account').
+      success(function(data) {
+        $scope.greeting = data;
+      });
     }
-  }
-  $(document).ready(function() {
-    $('select').material_select();
-    document.getElementById("saving_form").style.display="none";
-    document.getElementById("term_form").style.display="none";
-    document.getElementById("current_form").style.display="none";
-  });
-  </script>
-    </body>
+    </script>
+
+    <script type="text/javascript">
+    function selectHandler(){
+      var select = document.getElementById("account_select");
+      document.getElementById("saving_form").style.display="none";
+      document.getElementById("term_form").style.display="none";
+      document.getElementById("current_form").style.display="none";
+      switch (select.value){
+        case "1" :
+        document.getElementById("saving_form").style.display="inline";
+        break;
+        case "2":
+        document.getElementById("term_form").style.display="inline";
+        break;
+        case "3":
+        document.getElementById("current_form").style.display="inline";
+        break;
+      }
+    }
+    $(document).ready(function() {
+      $('select').material_select();
+      document.getElementById("saving_form").style.display="none";
+      document.getElementById("term_form").style.display="none";
+      document.getElementById("current_form").style.display="none";
+    });
+    </script>
+    
+  </body>
   </html>
