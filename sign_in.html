@@ -26,7 +26,7 @@
         <form action="/session/{{$sessionId}}/inscription/verif" method="post">
 
              <div class="input-field col s12">
-                <input id="cin" type="text" class="validate" name="cin">
+                <input id="cin" type="text" class="validate" name="cin" ng-model="user.cin">
                 <label for="cin">CIN</label>
             </div>
             <div class="input-field col s12">
@@ -43,5 +43,36 @@
      </div>
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script type="text/javascript" src="js/materialize.min.js"></script>
+      <script>
+    // Defining angularjs application.
+    var postApp = angular.module('postApp', []);
+    // Controller function and passing $http service and $scope var.
+    postApp.controller('postController', function($scope, $http) {
+      // create a blank object to handle form data.
+      $scope.user = {};
+      // calling our submit function.
+    
+      $scope.submitForm = function() {
+        // Posting data to php file
+        $http({
+          method  : 'POST',
+          url     : 'http://localhost:8080/api/user/'+$scope.,
+          data    : $scope.user, //forms user object
+          headers : {'Content-Type': 'application/x-www-form-urlencoded'} ,
+           transformRequest: function(obj) {
+        var str = [];
+        for(var p in obj)
+        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        return str.join("&");
+        },
+        })
+        .success(function(data) {
+            console.log(data);
+            Materialize.toast('User Create Success', 4000); // 4000 is the duration of the toast
+          
+          });
+      };
+    });
+    </script>
     </body>
   </html>
