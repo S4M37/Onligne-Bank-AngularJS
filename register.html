@@ -88,32 +88,28 @@
 <script>
     // Defining angularjs application.
     var postApp = angular.module('postApp', []);
-    alert("main");
     // Controller function and passing $http service and $scope var.
     postApp.controller('postController', function($scope, $http) {
       // create a blank object to handle form data.
       $scope.user = {};
       // calling our submit function.
-      alert("controller");
+    
       $scope.submitForm = function() {
-        alert($scope.user);
         // Posting data to php file
         $http({
           method  : 'POST',
           url     : 'http://localhost:8080/api/user/register',
           data    : $scope.user, //forms user object
-          headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+          headers : {'Content-Type': 'application/x-www-form-urlencoded'} ,
+           transformRequest: function(obj) {
+        var str = [];
+        for(var p in obj)
+        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        return str.join("&");
+        },
         })
         .success(function(data) {
-          /*if (data.errors) {
-              // Showing errors.
-              $scope.errorName = data.errors.name;
-              $scope.errorUserName = data.errors.username;
-              $scope.errorEmail = data.errors.email;
-            } else {
-              $scope.message = data.message;
-            }*/
-            alert("success");
+            console.log(data);
           });
       };
     });
