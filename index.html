@@ -1,0 +1,29 @@
+<!doctype html>
+<html ng-app>
+	<head>
+		<title>Hello AngularJS</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+    	<script >
+    	function Hello($scope, $http) {
+    $http.get('http://localhost:8080/api/user/9/account').
+        success(function(data) {
+        	alert(JSON.stringify(data));
+            $scope.data = data;
+        });
+}</script>
+	</head>
+
+	<body>
+		<div ng-controller="Hello">
+			<p>The ID is {{greeting.result[0].accountId}}</p>
+			<p>The content is {{greeting.accountType}}</p>
+			<form name="myForm">
+    <label for="mySelect">Make a choice:</label>
+    <select name="mySelect" id="mySelect"
+      ng-options="option.accountType for option in data.result track by option.accountId"></select>
+  </form>
+  <hr>
+  <tt>option = {{data.accountType}}</tt><br/>
+		</div>
+	</body>
+</html>

@@ -8,10 +8,16 @@
 
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+  <script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script> 
+
+
+
 </head>
 
-<body ng-app="postApp" ng-controller="postController">
-
+<body ng-app="postApp">
 
   <nav>
     <div class="nav-wrapper">
@@ -19,7 +25,13 @@
     </div>
   </nav>
 
-  <div class="container">
+  <div class="container" ng-controller="init">
+    <!-- User Accounts -->
+    <ul class="collapsible popout" data-collapsible="accordion" id="div_accounts">
+
+
+    </ul>
+
   </div>
 
   <div class="fixed-action-btn " style="bottom: 45px; right: 24px;">
@@ -29,7 +41,7 @@
 
 
   <!-- Modal Structure -->
-  <div id="modal1" class="modal modal-fixed-footer">
+  <div id="modal1" class="modal modal-fixed-footer" ng-controller="postController">
     <div class="modal-content">
 
 
@@ -51,12 +63,18 @@
       <div class="row" id="saving_form">
         <form name="saving_form" ng-submit="submitSavingForm()">
 
+          <!-- Label-->
+          <div class="input-field col s12">
+            <input id="label" type="text" class="validate" ng-model="SavingAccount.label">
+            <label for="label">label</label>
+          </div>
+
           <!-- Taxe promotion -->
           <div class="input-field col s12">
-            <select name="taxpromotionId" ng-model="SavingAccount.taxpromotionId">
+            <select name="taxpromotionId" ng-model="SavingAccount.taxpromotionId" id="savingTaxSelect">
               <option value="" disabled selected>Choose your option</option>
-              <option value="2">0.01 (30 jours)</option>
-              <option value="3">0.01 (365 jours)</option>
+              <!--<option value="2">0.01 (30 jours)</option>
+              <option value="3">0.01 (365 jours)</option>-->
 
             </select>
             <label>Taxe Promotion </label>
@@ -64,10 +82,10 @@
 
           <!-- Bonus promotion -->
           <div class="input-field col s12">
-            <select name="bonuspromotionId" ng-model="SavingAccount.bonuspromotionId">
+            <select name="bonuspromotionId" ng-model="SavingAccount.bonuspromotionId" id="savingBonusSelect">
               <option value="" disabled selected>Choose your option</option>
-              <option value="4">0.001 (365 jours)</option>
-              <option value="5">0.01 (365 jours)</option>
+              <!--<option value="4">0.001 (365 jours)</option>
+              <option value="5">0.01 (365 jours)</option>-->
 
             </select>
             <label>Bonus Promotion </label>
@@ -76,9 +94,9 @@
 
           <!-- withdrawallimitpromotion promotion -->
           <div class="input-field col s12">
-            <select name="withdrawallimitpromotionId" ng-model="SavingAccount.withdrawallimitpromotionId">
+            <select name="withdrawallimitpromotionId" ng-model="SavingAccount.withdrawallimitpromotionId" id="withdrawallimitSelect">
               <option value="" disabled selected>Choose your option</option>
-              <option value="1">300 (7 jours)</option>
+              <!--<option value="1">300 (7 jours)</option>-->
 
             </select>
             <label>withdrawallimit Promotion </label>
@@ -90,20 +108,26 @@
 
       <div id="term_form">
        <form name="term_form" ng-submit="submitTermForm()">
+        <!-- Label-->
+        <div class="input-field col s12">
+          <input id="label" type="text" class="validate" ng-model="TermAccount.label">
+          <label for="label">label</label>
+        </div>
 
         <!-- duration -->
         <div class="input-field col s6">
           <i class="material-icons prefix">av_timer</i>
-          <input id="icon_prefix" type="number" class="validate">
+          <input id="icon_prefix" type="number" class="validate" ng-model="TermAccount.duration">
           <label for="icon_prefix">Duration</label>
         </div>
 
         <!-- Bonus promotion -->
         <div class="input-field col s12">
-          <select name="bonuspromotionId">
+          <select name="bonuspromotionId" ng-model="TermAccount.bonuspromotionId" id="termBonusSelect">
             <option value="" disabled selected>Choose your option</option>
+            <!--
             <option value="4">0.001 (365 jours)</option>
-            <option value="5">0.01 (365 jours)</option>
+            <option value="5">0.01 (365 jours)</option>-->
 
           </select>
           <label>Bonus Promotion </label>
@@ -116,12 +140,20 @@
 
     <div id="current_form">
       <form name="current_form" ng-submit="submitCurrentForm()">
-        <!-- Taxe promotion -->
+
+        <!-- Label-->
         <div class="input-field col s12">
-          <select name="taxpromotionId">
+          <input id="label" type="text" class="validate" ng-model="CurrentAccount.label">
+          <label for="label">label</label>
+        </div>
+
+        <!-- Taxe promotion -->
+        <div class="input-field col s12" >
+          <select name="taxpromotionId" ng-model="CurrentAccount.taxpromotionId" id="currentTaxSelect">
             <option value="" disabled selected>Choose your option</option>
+            <!--
             <option value="2">0.01 (30 jours)</option>
-            <option value="3">0.01 (365 jours)</option>
+            <option value="3">0.01 (365 jours)</option>-->
 
           </select>
           <label>Taxe Promotion </label>
@@ -135,37 +167,113 @@
 
 
 
-
-
   </div>
   <div class="modal-footer">
     <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">OK</a>
   </div>
 </div>
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="js/materialize.min.js"></script>
-<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script> 
-
 
 <script>
 
-$(document).ready(function(){
-    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-    $('.modal-trigger').leanModal();
-  });
 
           // add saving account ANgular JS handler
           var postApp = angular.module('postApp', []);
+
+
+          postApp.controller('init', function($scope, $http) {
+
+            $http.get('http://localhost:8080/api/promotion').
+            success(function(data) {
+              var dataArray=data.result;
+              var taxArray=new Array();
+              var withdrawalLimitArray=new Array();
+              var bonusArray=new Array();
+
+              var savingTaxSelect=document.getElementById("savingTaxSelect");
+              var currentTaxSelect=document.getElementById("currentTaxSelect");
+
+              var termBonusSelect=document.getElementById("termBonusSelect");
+              var savingBonusSelect=document.getElementById("savingBonusSelect");
+
+              var withdrawallimitSelect=document.getElementById("withdrawallimitSelect");
+
+              dataArray.forEach(function(entry){
+                if(entry.promotionType=="withdrawalLimit"){
+                  var option=document.createElement("option");
+                  var options_str = '<option value="' + entry.promotionId + '">' + entry.limitPp+" ("+entry.period+" jours)" + '</option>';
+                  withdrawallimitSelect.innerHTML=withdrawallimitSelect.innerHTML+options_str;
+                }else if(entry.promotionType=="tax"){
+                  var option=document.createElement("option");
+                  var options_str = '<option value="' + entry.promotionId + '">' + entry.taxPp+" ("+entry.period+" jours)" + '</option>';
+                  savingTaxSelect.innerHTML=savingTaxSelect.innerHTML+options_str;
+                  currentTaxSelect.innerHTML=currentTaxSelect.innerHTML+options_str;
+                }else if(entry.promotionType=="bonus"){
+                  var option=document.createElement("option");
+                  var options_str = '<option value="' + entry.promotionId + '">' + entry.bonusPp+" ("+entry.period+" jours)" + '</option>';
+                  termBonusSelect.innerHTML=termBonusSelect.innerHTML+options_str;
+                  savingBonusSelect.innerHTML=savingBonusSelect.innerHTML+options_str;
+                }
+              });
+ $('select').material_select();
+});
+
+
+ $http.get('http://localhost:8080/api/user/9/account').
+ success(function(data) {
+          //alert(JSON.stringify(data));
+          var dataArray=data.result;
+
+          dataArray.forEach(function(entry) {
+
+            var collapsible=document.getElementById("div_accounts");
+            var li =document.createElement("li");
+            li.className="collapsible_entity";
+            var div_header=document.createElement("div");
+            div_header.className="collapsible-header";
+            var i=document.createElement("i");
+            i.className="material-icons";
+            i.innerHTML="monetization_on";
+            div_header.innerHTML=entry.label+" ("+entry.accountType+")";
+            div_header.appendChild(i);
+            var div_body=document.createElement("div");
+            div_body.className="collapsible-body";
+    //Creation Date :
+    var p= document.createElement("p");
+    p.innerHTML="Creation Date : "+entry.creationDate;
+    div_body.appendChild(p);
+
+    //Accoutn Number :
+    var p= document.createElement("p");
+    p.innerHTML="Account Number : "+entry.number;
+    div_body.appendChild(p);
+
+    //Account Balance :
+    var p= document.createElement("p");
+    p.innerHTML="Account Balance : "+entry.balance;
+    div_body.appendChild(p);
+
+
+    li.appendChild(div_header);
+    li.appendChild(div_body);
+    collapsible.appendChild(li);
+
+  });
+
+
+});
+});
     // Controller function and passing $http service and $scope var.
     postApp.controller('postController', function($scope, $http) {
+
       // create a blank object to handle form data.
       $scope.SavingAccount = {};
       // calling our submit function.
 
       $scope.submitSavingForm = function() {
-        alert($scope.SavingAccount.bonuspromotionId);
+        //alert($scope.SavingAccount.bonuspromotionId);
         // Posting data to php file
+        console.log(JSON.stringify($scope.SavingAccount));
         $http({
           method  : 'POST',
           url     : 'http://localhost:8080/api/user/9/account/add/saving',
@@ -182,42 +290,80 @@ $(document).ready(function(){
           console.log(data);
         });
       };
+
+      $scope.submitTermForm = function() {
+
+        // Posting data to php file
+        $http({
+          method  : 'POST',
+          url     : 'http://localhost:8080/api/user/9/account/add/term',
+          data    : $scope.TermAccount, //forms user object
+          headers : {'Content-Type': 'application/x-www-form-urlencoded'} ,
+          transformRequest: function(obj) {
+            var str = [];
+            for(var p in obj)
+              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            return str.join("&");
+          },
+        })
+        .success(function(data) {
+          console.log(data);
+        });
+      };
+
+      $scope.submitCurrentForm = function() {
+        //alert($scope.SavingAccount.bonuspromotionId);
+        // Posting data to php file
+        $http({
+          method  : 'POST',
+          url     : 'http://localhost:8080/api/user/9/account/add/current',
+          data    : $scope.CurrentAccount, //forms user object
+          headers : {'Content-Type': 'application/x-www-form-urlencoded'} ,
+          transformRequest: function(obj) {
+            var str = [];
+            for(var p in obj)
+              str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            return str.join("&");
+          },
+        })
+        .success(function(data) {
+          console.log(data);
+        });
+      };
+
     });
 
+ </script>
 
-    function Hello($scope, $http) {
-      $http.get('http://localhost:8080/api/user/9/account').
-      success(function(data) {
-        $scope.greeting = data;
-      });
-    }
-    </script>
+ <script type="text/javascript">
+ function selectHandler(){
+  var select = document.getElementById("account_select");
+  document.getElementById("saving_form").style.display="none";
+  document.getElementById("term_form").style.display="none";
+  document.getElementById("current_form").style.display="none";
+  switch (select.value){
+    case "1" :
+    document.getElementById("saving_form").style.display="inline";
+    break;
+    case "2":
+    document.getElementById("term_form").style.display="inline";
+    break;
+    case "3":
+    document.getElementById("current_form").style.display="inline";
+    break;
+  }
+}
 
-    <script type="text/javascript">
-    function selectHandler(){
-      var select = document.getElementById("account_select");
-      document.getElementById("saving_form").style.display="none";
-      document.getElementById("term_form").style.display="none";
-      document.getElementById("current_form").style.display="none";
-      switch (select.value){
-        case "1" :
-        document.getElementById("saving_form").style.display="inline";
-        break;
-        case "2":
-        document.getElementById("term_form").style.display="inline";
-        break;
-        case "3":
-        document.getElementById("current_form").style.display="inline";
-        break;
-      }
-    }
-    $(document).ready(function() {
-      $('select').material_select();
-      document.getElementById("saving_form").style.display="none";
-      document.getElementById("term_form").style.display="none";
-      document.getElementById("current_form").style.display="none";
-    });
-    </script>
-    
-  </body>
-  </html>
+
+$(document).ready(function() {
+  
+  document.getElementById("saving_form").style.display="none";
+  document.getElementById("term_form").style.display="none";
+  document.getElementById("current_form").style.display="none";
+  $('.modal-trigger').leanModal();  
+
+});
+</script>
+
+</body>
+</html>
