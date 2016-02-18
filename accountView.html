@@ -19,35 +19,40 @@
   <div class="navbar-fixed">
     <nav>
       <div class="nav-wrapper">
+        <!--TO-DO-->
+        <a href="file:///C:/Users/S4M37/Desktop/Onligne-Bank-AngularJS/userView.html" class="brand-logo">Account</a>
         <ul id="nav-account" class="right hide-on-med-and-down">
-        <li><a href="#">CheckDeposit</a></li>
-        <li><a href="#">Account Transfer</a></li>
-      </ul>
+          <li><a href="#">CheckDeposit</a></li>
+          <li><a href="#">Account Transfer</a></li>
+        </ul>
       </div>
     </nav>
   </div>
-
-  <div class="container" ng-controller="init">
-       <table class="bordered highlight" >
-        <thead>
-          <tr>
-              <th data-field="id"></th>
-              <th data-field="name"></th>
-          </tr>
-        </thead>
-
-        <tbody id="table_Account">
-  
-        </tbody>
-      </table>
+  <div class="progress" id="progress">
+      <div class="indeterminate"></div>
   </div>
 
-  <script type="text/javascript">
-  var postApp = angular.module('postApp', []);
+  <div class="container" ng-controller="init">
+    <h3>Account Detail</h3>
+    <div class="card-panel hoverable">
+      <table>
+        <tbody id="table_Account">
+
+        </tbody>
+      </table>
+    </div>
+  <h3>Account Transactions</h3>
+      <table class="bordered highlight">
+        <tbody id="accountTransactions">
+
+        </tbody>
+      </table>
+</div>
+    <script type="text/javascript">
+    var postApp = angular.module('postApp', []);
 
 
-          postApp.controller('init', function($scope, $http) {
-
+    postApp.controller('init', function($scope, $http) {
 
             //TO-DO
             $http.get('http://localhost:8080/api/user/9/account/173').
@@ -61,6 +66,7 @@
               tr.appendChild(td);
               td=document.createElement("td");
               td.innerHTML=accountDetail.number;
+              td.style.textAlign="center";
               tr.appendChild(td);
               table_Account.appendChild(tr);
 
@@ -71,6 +77,7 @@
               tr.appendChild(td);
               td=document.createElement("td");
               td.innerHTML=accountDetail.label;
+              td.style.textAlign="center";
               tr.appendChild(td);
               table_Account.appendChild(tr);
 
@@ -81,6 +88,7 @@
               tr.appendChild(td);
               td=document.createElement("td");
               td.innerHTML=accountDetail.accountType;
+              td.style.textAlign="center";
               tr.appendChild(td);
               table_Account.appendChild(tr);
 
@@ -90,16 +98,75 @@
               td.innerHTML="Account Balance ";
               tr.appendChild(td);
               td=document.createElement("td");
-              td.innerHTML=accountDetail.balance;
+              td.innerHTML=accountDetail.balance+" $";
+              td.style.textAlign="center";
               tr.appendChild(td);
               table_Account.appendChild(tr);
-              
+            });
+
+            //TO-DO
+            $http.get('http://localhost:8080/api/user/9/account/173/transaction').
+            success(function(data) {
+              var accountTransactions=data.result;
+              var accountTransactionTable=document.getElementById("accountTransactions");
+              accountTransactions.forEach(function(entry){
+
+              //Transaction Date
+              tr=document.createElement("tr");
+              td=document.createElement("td");
+              td.colSpan ="2";
+              td.style.textAlign="center";
+              td.innerHTML=entry.date;
+              tr.appendChild(td);
+              accountTransactionTable.appendChild(tr);
+              //Transaction Type
+              tr=document.createElement("tr");
+              td=document.createElement("td");
+              td.innerHTML="Transaction Type ";
+              tr.appendChild(td);
+              td=document.createElement("td");
+              td.innerHTML=entry.transactionType;
+              tr.appendChild(td);
+              accountTransactionTable.appendChild(tr);
+
+              //Transaction Balance
+              tr=document.createElement("tr");
+              td=document.createElement("td");
+              td.innerHTML="Transaction Balance ";
+              tr.appendChild(td);
+              td=document.createElement("td");
+              td.innerHTML=entry.balance+" $";
+              tr.appendChild(td);
+              accountTransactionTable.appendChild(tr);
+
+              //Transaction src
+              tr=document.createElement("tr");
+              td=document.createElement("td");
+              td.innerHTML="Transaction Source ";
+              tr.appendChild(td);
+              td=document.createElement("td");
+              td.innerHTML=entry.srcAccountId;
+              tr.appendChild(td);
+              accountTransactionTable.appendChild(tr);
+
+              //Transaction dest
+              tr=document.createElement("tr");
+              td=document.createElement("td");
+              td.innerHTML="Transaction Destination ";
+              tr.appendChild(td);
+              td=document.createElement("td");
+              td.innerHTML=entry.dstAccountId;
+              tr.appendChild(td);
+              accountTransactionTable.appendChild(tr);
+              });
+              document.getElementById("progress").style.display="none";
+            });
+});
+
+
+$(document).ready(function() {
 
 });
-});
-  $(document).ready(function() {
-   
-   });
-  </script>
+</script>
 </body>
 </html>

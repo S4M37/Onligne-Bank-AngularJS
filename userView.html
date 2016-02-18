@@ -18,13 +18,27 @@
 </head>
 
 <body ng-app="postApp">
-
-  <nav>
-    <div class="nav-wrapper">
-      <a href="#" class="brand-logo">Logo</a>
-    </div>
-  </nav>
-
+  <div class="navbar-fixed">
+    <ul id="dropdown1" class="dropdown-content" style="top : 20px">
+      <!--TO-DO-->
+      <li><a href="file:///C:/Users/S4M37/Desktop/Onligne-Bank-AngularJS/welcome.html" class="">Log out</a></li>
+    </ul>
+    <nav>
+      <div class="nav-wrapper">
+        <!-- TO-DO -->
+        <a href="file:///C:/Users/S4M37/Desktop/Onligne-Bank-AngularJS/user_profile.html" class="brand-logo">Profile</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          
+          <li><a class="dropdown-button" href="#!"
+           data-activates="dropdown1"><i
+           class="material-icons right">more_vert</i></a></li>
+         </ul>
+       </div>
+     </nav>
+   </div>
+   <div class="progress" id="progress">
+    <div class="indeterminate"></div>
+  </div>
   <div class="container" ng-controller="init">
     <!-- User Accounts -->
     <ul class="collapsible popout" data-collapsible="accordion" id="div_accounts">
@@ -182,45 +196,45 @@
 
 
           postApp.controller('init', function($scope, $http) {
+              //TO-DO
+              $http.get('http://localhost:8080/api/promotion').
+              success(function(data) {
+                var dataArray=data.result;
+                var taxArray=new Array();
+                var withdrawalLimitArray=new Array();
+                var bonusArray=new Array();
 
-            $http.get('http://localhost:8080/api/promotion').
-            success(function(data) {
-              var dataArray=data.result;
-              var taxArray=new Array();
-              var withdrawalLimitArray=new Array();
-              var bonusArray=new Array();
+                var savingTaxSelect=document.getElementById("savingTaxSelect");
+                var currentTaxSelect=document.getElementById("currentTaxSelect");
 
-              var savingTaxSelect=document.getElementById("savingTaxSelect");
-              var currentTaxSelect=document.getElementById("currentTaxSelect");
+                var termBonusSelect=document.getElementById("termBonusSelect");
+                var savingBonusSelect=document.getElementById("savingBonusSelect");
 
-              var termBonusSelect=document.getElementById("termBonusSelect");
-              var savingBonusSelect=document.getElementById("savingBonusSelect");
+                var withdrawallimitSelect=document.getElementById("withdrawallimitSelect");
 
-              var withdrawallimitSelect=document.getElementById("withdrawallimitSelect");
-
-              dataArray.forEach(function(entry){
-                if(entry.promotionType=="withdrawalLimit"){
-                  var option=document.createElement("option");
-                  var options_str = '<option value="' + entry.promotionId + '">' + entry.limitPp+" ("+entry.period+" jours)" + '</option>';
-                  withdrawallimitSelect.innerHTML=withdrawallimitSelect.innerHTML+options_str;
-                }else if(entry.promotionType=="tax"){
-                  var option=document.createElement("option");
-                  var options_str = '<option value="' + entry.promotionId + '">' + entry.taxPp+" ("+entry.period+" jours)" + '</option>';
-                  savingTaxSelect.innerHTML=savingTaxSelect.innerHTML+options_str;
-                  currentTaxSelect.innerHTML=currentTaxSelect.innerHTML+options_str;
-                }else if(entry.promotionType=="bonus"){
-                  var option=document.createElement("option");
-                  var options_str = '<option value="' + entry.promotionId + '">' + entry.bonusPp+" ("+entry.period+" jours)" + '</option>';
-                  termBonusSelect.innerHTML=termBonusSelect.innerHTML+options_str;
-                  savingBonusSelect.innerHTML=savingBonusSelect.innerHTML+options_str;
-                }
-              });
+                dataArray.forEach(function(entry){
+                  if(entry.promotionType=="withdrawalLimit"){
+                    var option=document.createElement("option");
+                    var options_str = '<option value="' + entry.promotionId + '">' + entry.limitPp+" ("+entry.period+" jours)" + '</option>';
+                    withdrawallimitSelect.innerHTML=withdrawallimitSelect.innerHTML+options_str;
+                  }else if(entry.promotionType=="tax"){
+                    var option=document.createElement("option");
+                    var options_str = '<option value="' + entry.promotionId + '">' + entry.taxPp+" ("+entry.period+" jours)" + '</option>';
+                    savingTaxSelect.innerHTML=savingTaxSelect.innerHTML+options_str;
+                    currentTaxSelect.innerHTML=currentTaxSelect.innerHTML+options_str;
+                  }else if(entry.promotionType=="bonus"){
+                    var option=document.createElement("option");
+                    var options_str = '<option value="' + entry.promotionId + '">' + entry.bonusPp+" ("+entry.period+" jours)" + '</option>';
+                    termBonusSelect.innerHTML=termBonusSelect.innerHTML+options_str;
+                    savingBonusSelect.innerHTML=savingBonusSelect.innerHTML+options_str;
+                  }
+                });
  $('select').material_select();
 });
 
-
- $http.get('http://localhost:8080/api/user/9/account').
- success(function(data) {
+//TO-DO
+$http.get('http://localhost:8080/api/user/9/account').
+success(function(data) {
           //alert(JSON.stringify(data));
           var dataArray=data.result;
 
@@ -259,6 +273,19 @@
     collapsible.appendChild(li);
 
     a=document.createElement("a");
+    a.className="waves-effect waves-light btn  amber accent-4";
+    a.href="#!" 
+    a.innerHTML="edit";
+    i=document.createElement("i");
+    i.className="material-icons left";
+    i.innerHTML="edit";
+    a.appendChild(i);
+    div_body.appendChild(a);
+    li.appendChild(div_header);
+    li.appendChild(div_body);
+    collapsible.appendChild(li);
+
+    a=document.createElement("a");
     a.className="waves-effect waves-light btn red darken-3";
     //TO-DO
     a.href="http://localhost:8080/api/user/9/account/"+entry.accountId+"/remove" 
@@ -273,6 +300,7 @@
     collapsible.appendChild(li);
 
   });
+ document.getElementById("progress").style.display="none";
 
 
 });
@@ -370,7 +398,7 @@
 
 
 $(document).ready(function() {
-  
+
   document.getElementById("saving_form").style.display="none";
   document.getElementById("term_form").style.display="none";
   document.getElementById("current_form").style.display="none";
