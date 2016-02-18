@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <!--Import Google Icon Font-->
+  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+  <script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.16/angular.min.js"></script>
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+
+<body ng-app="postApp">
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper">
+        <ul id="nav-account" class="right hide-on-med-and-down">
+        <li><a href="#">CheckDeposit</a></li>
+        <li><a href="#">Account Transfer</a></li>
+      </ul>
+      </div>
+    </nav>
+  </div>
+
+  <div class="container" ng-controller="init">
+       <table class="bordered highlight" >
+        <thead>
+          <tr>
+              <th data-field="id"></th>
+              <th data-field="name"></th>
+          </tr>
+        </thead>
+
+        <tbody id="table_Account">
+  
+        </tbody>
+      </table>
+  </div>
+
+  <script type="text/javascript">
+  var postApp = angular.module('postApp', []);
+
+
+          postApp.controller('init', function($scope, $http) {
+
+
+            //TO-DO
+            $http.get('http://localhost:8080/api/user/9/account/173').
+            success(function(data) {
+              var accountDetail=data.result;
+              var table_Account=document.getElementById("table_Account");  
+              //Account Number                
+              var tr=document.createElement("tr");
+              var td=document.createElement("td");
+              td.innerHTML="Account Number ";
+              tr.appendChild(td);
+              td=document.createElement("td");
+              td.innerHTML=accountDetail.number;
+              tr.appendChild(td);
+              table_Account.appendChild(tr);
+
+              //Acount Label
+              tr=document.createElement("tr");
+              td=document.createElement("td");
+              td.innerHTML="Account Label ";
+              tr.appendChild(td);
+              td=document.createElement("td");
+              td.innerHTML=accountDetail.label;
+              tr.appendChild(td);
+              table_Account.appendChild(tr);
+
+              //Acount Label
+              tr=document.createElement("tr");
+              td=document.createElement("td");
+              td.innerHTML="Account Type ";
+              tr.appendChild(td);
+              td=document.createElement("td");
+              td.innerHTML=accountDetail.accountType;
+              tr.appendChild(td);
+              table_Account.appendChild(tr);
+
+              //Acount Balance
+              tr=document.createElement("tr");
+              td=document.createElement("td");
+              td.innerHTML="Account Balance ";
+              tr.appendChild(td);
+              td=document.createElement("td");
+              td.innerHTML=accountDetail.balance;
+              tr.appendChild(td);
+              table_Account.appendChild(tr);
+              
+
+});
+});
+  $(document).ready(function() {
+   
+   });
+  </script>
+</body>
+</html>
